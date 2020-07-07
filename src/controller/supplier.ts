@@ -3,29 +3,36 @@ import Supplier from "../database/database";
 import {dataValidator} from "../utils/dataValidator";
 import {SupplierRepository} from "../database/supplierRepository";
 import {$log} from "@tsed/logger";
+import {type} from "os";
 
-$log.level = "debug";
 $log.name = "CONTROLLER";
 
 export let allSuppliers = async (req: Request, res: Response) => {
+    $log.name = "CONTROLLER";
     $log.info("Get all suppliers")
     const response = await SupplierRepository.findAll();
     res.send(response)
 };
 
 export let getSupplier = async (req: Request, res: Response) => {
+    $log.name = "CONTROLLER";
     $log.info(`Get supplier with code ${Number(req.params.code)}`)
     const response = await SupplierRepository.findByCode(Number(req.params.code));
     res.send(response)
 };
 
 export let deleteSupplier = async (req: Request, res: Response) => {
+    $log.name = "CONTROLLER";
     $log.info(`Delete supplier with code ${Number(req.params.code)}`)
-    const response = await SupplierRepository.deleteByCode(Number(req.params.code));
+    let response = await SupplierRepository.findByCode(Number(req.params.code));
+    if (typeof(response) == "object"){
+        response = await SupplierRepository.deleteByCode(Number(req.params.code));
+    }
     res.send(response)
 };
 
 export let addSupplier = async (req: Request, res: Response) => {
+    $log.name = "CONTROLLER";
     $log.info(`Create supplier with code ${req.body.code}`);
     const result = await dataValidator(req.body);
     if (result != null) {

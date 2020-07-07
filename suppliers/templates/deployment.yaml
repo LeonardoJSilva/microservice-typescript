@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: suppliers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: suppliers
+  template:
+    metadata:
+      labels:
+        app: suppliers
+    spec:
+      containers:
+        - name: products
+          image: leonardojsilva/suppliers:6.0
+          ports:
+            - containerPort: 3000
+            - containerPort: 50051
+          env:
+            - name: "MONGO_HOST"
+              value: "mongodb"
+            - name: "MONGO_PORT"
+              value: "27017"
+            - name: "MONGO_USERNAME"
+              value: "user"
+            - name: "MONGO_PASSWORD"
+              value: "pass"
+            - name: "MONGO_DATABASE"
+              value: "suppliers"
+            - name: "GRPC_SUPPLIERS_PORT"
+              value: "50051"
+            - name: "PORT"
+              value: "80"
+

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service Supplier{
+  rpc GetSuppliersByCodes (SuppliersByCodesRequest) returns (SuppliersByCodesResponse) {}
+}
+
+message SuppliersByCodesRequest{
+   repeated int32 Codes = 1;
+}
+
+message SuppliersByCodesResponse{
+   repeated int32 Codes = 1;
+}
